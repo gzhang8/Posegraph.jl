@@ -21,7 +21,7 @@ function error_point3_dist_var_se3(user_data, parameters)
     observation3d_dst = user_data[1:3]
     observation3d_src = user_data[4:6]
 
-    q_dst_src = q_a = Rotations.Quat(parameters[1]...) # 4
+    q_dst_src = q_a = Rotations.QuatRotation(parameters[1]...) # 4
     trans_dst_src = parameters[2] # 3
 
     p_src_trans = q_dst_src * observation3d_src

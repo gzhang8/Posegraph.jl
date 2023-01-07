@@ -55,7 +55,7 @@ function stereo_reprojection_error_wo_undistort(
     information_sqrt = reshape(user_data[9:17], (3, 3))
 
     t_cw = parameters[1] # x, y, z
-    q_cw = Rotations.Quat(parameters[2]...) # w, x, y, z
+    q_cw = Rotations.QuatRotation(parameters[2]...) # w, x, y, z
     p3d_w = parameters[3] # xyz
 
     p3d_c = q_cw * p3d_w
@@ -118,7 +118,22 @@ end
 
 function getχ²(e::EdgeStereoSE3ProjectXYZ)
     error = get_error(e)
-    information = get_information(e)
-    χ² = error' * (information * error)
+    # information = get_information(e)
+    # χ² = error' * (information * error)
+    χ² = error' * error
     return χ²[1]
+end
+
+
+function is_depth_positive(e::EdgeStereoSE3ProjectXYZ) 
+    # [e.v_cw.xyz, e.v_cw.qwxyz, e.v_p3e.xyz],
+    t_cw = e.v_cw.xyz # x, y, z
+    q_cw = Rotations.QuatRotation(e.v_cw.qwxyz...) # w, x, y, z
+    p3d_w = e.v_p3e.xyz # xyz
+
+    p3d_c = q_cw * p3d_w
+    p3d_c += t_cw
+
+    z = p3d_c[3]
+    return z > 0
 end

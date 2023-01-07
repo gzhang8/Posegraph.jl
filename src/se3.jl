@@ -85,13 +85,13 @@ so not try improve performance unless has a clear picture
 """
 function se3_edge_error_Twc(userdata, parameters)
     p_ab = userdata[1:3] # x, y, z
-    q_ab = Rotations.Quat(userdata[4:7]...) # w, x, y, z TODO: check
+    q_ab = Rotations.QuatRotation(userdata[4:7]...) # w, x, y, z TODO: check
     information_sqrt = reshape(userdata[8:8+35], (6, 6))
     p_a = parameters[1]
-    q_a = Rotations.Quat(parameters[2]...)
+    q_a = Rotations.QuatRotation(parameters[2]...)
 
     p_b = parameters[3]
-    q_b = Rotations.Quat(parameters[4]...)
+    q_b = Rotations.QuatRotation(parameters[4]...)
 
     # for unit quaternion, inv and conj is the same
     q_a_inverse = inv(q_a)
@@ -143,13 +143,13 @@ only this one works. Both rotation and translation has to be like this
 """
 function se3_edge_error_Tcw(userdata, parameters)
     p_ab = userdata[1:3] # x, y, z
-    q_ab = Rotations.Quat(userdata[4:7]...) # w, x, y, z TODO: check
+    q_ab = Rotations.QuatRotation(userdata[4:7]...) # w, x, y, z TODO: check
     information_sqrt = reshape(userdata[8:8+35], (6, 6))
     p_aw = parameters[1]
-    q_aw = Rotations.Quat(parameters[2]...)
+    q_aw = Rotations.QuatRotation(parameters[2]...)
 
     p_bw = parameters[3]
-    q_bw = Rotations.Quat(parameters[4]...)
+    q_bw = Rotations.QuatRotation(parameters[4]...)
 
     # q_a_inverse = q_aw
     # q_b = inv(q_bw)
