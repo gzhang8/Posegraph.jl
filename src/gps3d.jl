@@ -25,7 +25,7 @@ function error_gps_3d(user_data, parameters)
     gps_observation_3d = user_data[1:3]
     information_sqrt = reshape(user_data[4:12], (3, 3))
 
-    # q_dst_src = q_a = Rotations.Quat(parameters[1]...) # 4
+    # q_dst_src = q_a = Rotations.QuatRotation(parameters[1]...) # 4
     trans_Twc = parameters[1] # 3
 
     residuals = gps_observation_3d - trans_Twc
@@ -48,7 +48,7 @@ function error_gps_3d_Tcw(user_data, parameters)
     gps_observation_3d = user_data[1:3]
     information_sqrt = reshape(user_data[4:12], (3, 3))
 
-    q_Tcw = Rotations.Quat(parameters[1]...) # 4
+    q_Tcw = Rotations.QuatRotation(parameters[1]...) # 4
     trans_Tcw = parameters[2] # 3
 
     trans_Twc = - inv(q_Tcw) * trans_Tcw
